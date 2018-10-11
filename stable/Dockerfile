@@ -3,7 +3,7 @@ FROM ubuntu:bionic
 MAINTAINER Andrii Melnyk <kukoban@ukr.net>
 
 ENV ROOTDIR /usr/local/
-ENV GDAL_VERSION 2.3.0
+ENV GDAL_VERSION 2.3.2
 ENV OPENJPEG_VERSION 2.3.0
 
 # Load assets
