@@ -32,7 +32,6 @@ RUN apt-get update -y && apt-get install -y \
     libspatialite-dev \
     libhdf4-alt-dev \
     libhdf5-serial-dev \
-    wget \
     bash-completion \
     cmake
 
@@ -48,7 +47,7 @@ RUN cd src && tar -xvf gdal-${GDAL_VERSION}.tar.gz && cd gdal-${GDAL_VERSION} \
     && ./configure --with-python --with-spatialite --with-pg --with-cryptopp --with-curl --with-openjpeg=$ROOTDIR \
     && make && make install && ldconfig \
     && apt-get update -y \
-    && apt-get remove -y --purge build-essential wget \
+    && apt-get remove -y --purge build-essential \
     && cd $ROOTDIR && cd src/gdal-${GDAL_VERSION}/swig/python \
     && python3 setup.py build \
     && python3 setup.py install \
