@@ -1,4 +1,6 @@
-FROM ubuntu:bionic
+ARG base_img=ubuntu:bionic
+
+FROM $base_img
 
 MAINTAINER Andrii Melnyk <kukoban@ukr.net>
 
