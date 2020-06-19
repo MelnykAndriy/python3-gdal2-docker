@@ -17,10 +17,11 @@ ADD https://github.com/uclouvain/openjpeg/archive/v${OPENJPEG_VERSION}.tar.gz $R
 # Install basic dependencies
 RUN apt-get update -y && apt-get install -y \
     software-properties-common \
-    python3-software-properties \
+    # python3-software-properties \
     build-essential \
-    python3-dev \
-    python3-numpy \
+    # python3-dev \
+    # python3-numpy \
+    libexpat1-dev \
     libspatialite-dev \
     sqlite3 \
     libpq-dev \
@@ -43,6 +44,9 @@ RUN cd src && tar -xvf openjpeg-${OPENJPEG_VERSION}.tar.gz && cd openjpeg-${OPEN
     && cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$ROOTDIR \
     && make && make install && make clean \
     && cd $ROOTDIR && rm -Rf src/openjpeg*
+
+# Install numpy
+RUN pip install numpy
 
 # Compile and install GDAL
 RUN cd src && tar -xvf gdal-${GDAL_VERSION}.tar.gz && cd gdal-${GDAL_VERSION} \
