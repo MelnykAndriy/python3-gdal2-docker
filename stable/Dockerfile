@@ -28,6 +28,7 @@ RUN apt-get update -y && apt-get install -y \
     libcurl4-gnutls-dev \
     libcrypto++-dev \
     libproj-dev \
+    libzstd-dev \
     libxml2-dev \
     libgeos-dev \
     libnetcdf-dev \
@@ -50,7 +51,7 @@ RUN pip install numpy
 
 # Compile and install GDAL
 RUN cd src && tar -xvf gdal-${GDAL_VERSION}.tar.gz && cd gdal-${GDAL_VERSION} \
-    && ./configure --with-python --with-spatialite --with-pg --with-cryptopp --with-curl --with-openjpeg=$ROOTDIR \
+    && ./configure --with-python --with-spatialite --with-pg --with-cryptopp --with-curl --with-zstd --with-openjpeg=$ROOTDIR \
     && make && make install && ldconfig \
     && apt-get update -y \
     && apt-get remove -y --purge build-essential \
