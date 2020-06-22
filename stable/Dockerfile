@@ -5,8 +5,8 @@ FROM $base_img
 MAINTAINER Andrii Melnyk <kukoban@ukr.net>
 
 ENV ROOTDIR /usr/local/
-ARG GDAL_VERSION=2.3.2
-ARG OPENJPEG_VERSION=2.3.0
+ARG GDAL_VERSION=2.4.4
+ARG OPENJPEG_VERSION=2.3.1
 
 # Load assets
 WORKDIR $ROOTDIR/
