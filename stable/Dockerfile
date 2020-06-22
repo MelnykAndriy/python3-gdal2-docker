@@ -1,4 +1,4 @@
-ARG base_img=ubuntu:bionic
+ARG base_img=python:3.7.7-buster
 
 FROM $base_img
 
