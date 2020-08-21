@@ -38,7 +38,8 @@ RUN apt-get update -y && apt-get install -y \
     libxerces-c-dev \
     libxml2-dev \
     libzstd-dev \
-    libzstd-dev zip curl \
+    zip \
+    curl \
     software-properties-common \
     sqlite3 
 
@@ -60,26 +61,26 @@ RUN cd src && tar -xvf openjpeg-${OPENJPEG_VERSION}.tar.gz && rm openjpeg-${OPEN
 # Compile and install GDAL
 # --with-pg \
 #     --with-spatialite \
-RUN cd src && tar -xvf gdal-${GDAL_VERSION}.tar.gz && cd gdal-${GDAL_VERSION} \
+# --disable-all-optional-drivers \
+RUN cd src && tar -xf gdal-${GDAL_VERSION}.tar.gz && cd gdal-${GDAL_VERSION} \
     && ./configure --prefix=/usr \
-    --without-libtool \
-    --with-hide-internal-symbols \
-    --with-libtiff=internal --with-rename-internal-libtiff-symbols \
-    --with-geotiff=internal --with-rename-internal-libgeotiff-symbols \
-    --disable-all-optional-drivers \
-    --enable-driver-shape \
-    --enable-driver-gpkg \
-    --with-webp \
-    --without-pcraster \
-    --without-pcidsk \
-    --without-lerc \
-    --without-gnm \
-    --without-gif \
     --enable-lto \
-    --with-python \
     --with-cryptopp \
     --with-curl \
+    --with-geotiff=internal --with-rename-internal-libgeotiff-symbols \
+    --with-hide-internal-symbols \
+    --with-libtiff=internal --with-rename-internal-libtiff-symbols \
+    --with-openjpeg \
+    --with-proj \
+    --with-python \
+    --with-webp \
     --with-zstd \
+    --without-gif \
+    --without-gnm \
+    --without-lerc \
+    --without-libtool \
+    --without-pcidsk \
+    --without-pcraster \
     && make -j$(nproc) \
     && make install DESTDIR="/build" \
     && cd ../../
@@ -110,26 +111,36 @@ FROM $base_img as runner
 
 RUN apt-get update -y; \
     DEBIAN_FRONTEND=noninteractive apt-get install -y  --no-install-recommends \
-        libjpeg62-turbo \
-        libgeos-3.7.1 \
-        libhdf4-0-alt \
-        libspatialite7 \
-        libgeos-c1v5 \
+        g++ \
+        gcc \
+        gnupg \
+        libaec0 \
+        libcrypto++6 \
+        libcurl4 \
         libexpat1 \
-        libxerces-c3.2 \
+        libgeos-3.7.1 \
+        libgeos-c1v5 \
+        libhdf4-0-alt \
         libhdf5-103 \
         libhdf5-cpp-103 \
-        libaec0 \
-        libwebp6 \
-        libcrypto++6 \
+        libjpeg62-turbo \
         libnetcdf13\
-        libzstd1 \
-        libpq5 \
-        libssl1.1 \
         libopenjp2-7 \
+        libpq-dev \
+        libpq5 \
+        libproj-dev \
+        libspatialite7 \
         libsqlite3-0 \
+        libssl1.1 \
         libtiff5 \
-        libcurl4 
+        libwebp6 \
+        libxerces-c3.2 \
+        libzstd1
+# gcc, g++ for compilable libraries such as psycopg2, cython etc.
+# libpq is purely for psycopg2
+# gnupg is required for stuff like curling from https
+# hdf, sqlite, pg, two jpeg drivers are questionable
+
 
 RUN pip install numpy
 
