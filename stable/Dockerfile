@@ -2,6 +2,7 @@ ARG base_img=python:3.7-slim
 
 FROM $base_img as builder
 
+LABEL maintainer="Andrii Melnyk <kukoban@ukr.net>"
 
 ENV ROOTDIR /usr/local/
 ARG GDAL_VERSION=2.4.4
@@ -108,6 +109,7 @@ RUN cd src/gdal-${GDAL_VERSION}/swig/python \
 
 
 FROM $base_img as runner
+LABEL maintainer="Andrii Melnyk <kukoban@ukr.net>"
 
 RUN apt-get update -y; \
     DEBIAN_FRONTEND=noninteractive apt-get install -y  --no-install-recommends \
